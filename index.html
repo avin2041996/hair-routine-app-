@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hair Routine</title>
 
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: #fff;
+      width: 90%;
+      max-width: 420px;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+    .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 15px 0;
+    }
+    button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #2563eb;
+      color: #fff;
+    }
+    button.done {
+      background: #16a34a;
+    }
+    .edit {
+      background: #e5e7eb;
+      color: #000;
+      width: 100%;
+      margin-top: 15px;
+    }
+    .footer {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #475569;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Hair Routine</h1>
+
+    <div class="task">
+      <span id="finText">Finasteride 0.5 mg – 2:00 PM</span>
+      <button onclick="toggle('fin')" id="finBtn">Mark</button>
+    </div>
+
+    <div class="task">
+      <span id="minText">Minoxidil 1 ml – Night</span>
+      <button onclick="toggle('min')" id="minBtn">Mark</button>
+    </div>
+
+    <button class="edit" onclick="editRoutine()">Modify Routine</button>
+
+    <div class="footer">
+      Consistency beats motivation.
+    </div>
+  </div>
+
+  <script>
+    const state = { fin: false, min: false };
+
+    function toggle(type) {
+      state[type] = !state[type];
+      const btn = document.getElementById(type + 'Btn');
+      btn.textContent = state[type] ? 'Done' : 'Mark';
+      btn.className = state[type] ? 'done' : '';
+    }
+
+    function editRoutine() {
+      const fin = prompt("Finasteride details", "0.5 mg – 2:00 PM");
+      const min = prompt("Minoxidil details", "1 ml – Night");
+
+      if (fin) document.getElementById("finText").textContent = "Finasteride " + fin;
+      if (min) document.getElementById("minText").textContent = "Minoxidil " + min;
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>
